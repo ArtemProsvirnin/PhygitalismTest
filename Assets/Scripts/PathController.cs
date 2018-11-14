@@ -10,7 +10,11 @@ public class PathController
     private Path path;
     private Transform transform;
     private int step;
+
+    //Позиция после остановки
     private Vector3 lastPosition;
+
+    //Данный параметр нужен для возможности продолжения движения из lastPosition
     private Vector3 difference;
 
     public PathController(Path path, Transform transform)
@@ -28,6 +32,7 @@ public class PathController
 
     public void Reset()
     {
+        //Reset 'обнуляет' difference и lastPosition, возвращает шар в начальную точку
         step = 0;
         lastPosition = difference = Vector3.zero;
         transform.position = getFirstVector();
