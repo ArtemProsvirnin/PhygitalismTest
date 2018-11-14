@@ -708,9 +708,9 @@ Canvas:
   m_GameObject: {fileID: 653833518}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_RenderMode: 1
+  m_Camera: {fileID: 1642320162}
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -1203,7 +1203,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u0414\u043B\u044F \u0432\u0440\u0430\u0449\u0435\u043D\u0438\u044F \u0437\u0430\u0436\u043C\u0438\u0442\u0435
-    \u043B\u0435\u0432\u0443\u044E \u043A\u043D\u043E\u043F\u043A\u0443 \u043C\u044B\u0448\u0438"
+    \u043F\u0440\u0430\u0432\u0443\u044E \u043A\u043D\u043E\u043F\u043A\u0443 \u043C\u044B\u0448\u0438"
 --- !u!222 &1370911902
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1286,6 +1286,11 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1572527539}
   m_CullTransparentMesh: 0
+--- !u!20 &1642320162 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 20038421401777720, guid: b5bbcf1cd1371f242997d80845bc01aa,
+    type: 2}
+  m_PrefabInternal: {fileID: 358222043}
 --- !u!1 &2037311894
 GameObject:
   m_ObjectHideFlags: 0
