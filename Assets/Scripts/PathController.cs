@@ -17,16 +17,19 @@ public class PathController
     //Данный параметр нужен для возможности продолжения движения из lastPosition
     private Vector3 difference;
 
-    public PathController(Path path, Transform transform)
+    public PathController(string jsonText, Transform transform)
     {
-        this.path = path;
+        this.path = new Path(jsonText); ;
         this.transform = transform;
         this.transform.position = getFirstVector();
     }
 
     public void Play()
     {
-        step = 0;
+        if (step != 0)
+            return;
+
+        lastPosition = transform.position;
         transform.position = getFirstVector();
     }
 
@@ -40,11 +43,6 @@ public class PathController
 
     public void Move(float speed)
     {
-        if (speed == 0)
-        {
-            return;
-        }
-
         Vector3 direction = getTargetVector();
 
         if (Vector3.Distance(transform.position, direction) == 0)
@@ -56,7 +54,7 @@ public class PathController
 
         if (step == path.Length && OnFinish != null)
         {
-            lastPosition = direction;
+            step = 0;
             OnFinish(this, new EventArgs());
         }
     }

@@ -30,30 +30,27 @@ public class SceneManager : MonoBehaviour {
     {
         checkForChangeBall();
         checkForClick();
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
+        checkForExit();
     }
 
     private void checkForChangeBall()
     {
-        if (Input.GetKeyDown("left"))
+        checkForChangeBall("left", nextBall);
+        checkForChangeBall("right", previousBall);
+    }
+    
+    private void checkForChangeBall(string key, Action action)
+    {
+        if (Input.GetKeyDown(key))
         {
-            nextBall();
-        }
-
-        if (Input.GetKeyDown("right"))
-        {
-            previousBall();
+            ActiveBall.Pause();
+            action();
+            updateBall();
         }
     }
 
     private void nextBall()
-    {
-        ActiveBall.Freeze();
-
+    {   
         if (activeBallIndex >= ballCount - 1)
         {
             activeBallIndex = 0;
@@ -61,15 +58,11 @@ public class SceneManager : MonoBehaviour {
         else
         {
             activeBallIndex++;
-        }
-
-        updateBall();
+        }        
     }
 
     private void previousBall()
     {
-        ActiveBall.Freeze();
-
         if (activeBallIndex <= 0)
         {
             activeBallIndex = ballCount - 1;
@@ -78,13 +71,11 @@ public class SceneManager : MonoBehaviour {
         {
             activeBallIndex--;
         }
-
-        updateBall();
     }
 
     private void updateBall()
     {
-        ActiveBall.WakeUp();
+        ActiveBall.Resume();
         slider.Value = ActiveBall.speed;
         cameraManager.SetBall(ActiveBall);
     }
@@ -121,5 +112,13 @@ public class SceneManager : MonoBehaviour {
     private void updateSpeed(object sender, EventArgs e)
     {
         ActiveBall.speed = slider.Value;
+    }
+
+    private void checkForExit()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 }

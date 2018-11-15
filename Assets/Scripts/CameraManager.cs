@@ -10,6 +10,7 @@ public class CameraManager : MonoBehaviour
     private Vector3 offset;
     private float distance;
     private float rotationLevel = 0.0f;
+    private float screenHalfWidth = Screen.width / 2;
 
     void Start()
     {
@@ -27,7 +28,6 @@ public class CameraManager : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             rotate();
-            moveToBall(new Vector3(offset.x, ball.transform.position.y + offset.y, offset.z));
             transform.LookAt(ball.transform.position);
         }
         else
@@ -39,17 +39,16 @@ public class CameraManager : MonoBehaviour
 
     private void rotate()
     {
-        if (Input.mousePosition.x - Screen.width / 2 > 0)
-        {
-            rotationLevel += Time.deltaTime;
-        }
-        else
-        {
-            rotationLevel -= Time.deltaTime;
-        }
+        var mouseDistance = (Input.mousePosition.x - screenHalfWidth) / screenHalfWidth;
+        
+        rotationLevel += Mathf.Clamp(mouseDistance, -1.0f, 1.0f) * Time.deltaTime * 5.0f;
+    
+        float x = ball.transform.position.x + Mathf.Cos(rotationLevel) * distance;
+        float z = ball.transform.position.z + Mathf.Sin(rotationLevel) * distance;
 
-        offset.x = ball.transform.position.x + Mathf.Cos(5.0f * rotationLevel) * distance;
-        offset.z = ball.transform.position.z + Mathf.Sin(5.0f * rotationLevel) * distance;
+        Vector3 vector = new Vector3(x, ball.transform.position.y + offset.y, z);
+
+        moveToBall(vector);
     }
 
     private void moveToBall(Vector3 newPosition)
