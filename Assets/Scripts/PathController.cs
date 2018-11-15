@@ -35,7 +35,7 @@ public class PathController
 
     public void Reset()
     {
-        //Reset 'обнуляет' difference и lastPosition, возвращает шар в начальную точку
+        //Reset 'обнуляет' difference и lastPosition, возвращает шар в начальную позицию
         step = 0;
         lastPosition = difference = Vector3.zero;
         transform.position = getFirstVector();
@@ -44,14 +44,17 @@ public class PathController
     public void Move(float speed)
     {
         Vector3 direction = getTargetVector();
+        transform.position = Vector3.MoveTowards(transform.position, direction, (speed * 10) * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, direction) == 0)
+        if (Vector3.Distance(transform.position, direction) < 0.1)
         {
             step++;
+            checkForFinish();
         }
+    }
 
-        transform.position = Vector3.MoveTowards(transform.position, direction, (speed * 5) * Time.deltaTime);
-
+    private void checkForFinish()
+    {
         if (step == path.Length && OnFinish != null)
         {
             step = 0;
